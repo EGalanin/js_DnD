@@ -27,6 +27,7 @@ export default class Board {
     this.loadListOfTasks();
     this.drawBoard();
     this.drawSavedTasks();
+
     const addList = this.board.querySelectorAll('.column__add');
     [...addList].forEach((el) => el.addEventListener('click', this.addInput));
     window.addEventListener('beforeunload', this.saveListOfTasks);
@@ -85,12 +86,13 @@ export default class Board {
   }
 
   drawSavedTasks() {
-    const parents = ['.todo', '.in-progress', 'done'];
+    const parents = ['.todo', '.in-progress', '.done'];
 
     for (let i = 0; i < parents.length; i += 1) {
       const parent = this.board.querySelector(parents[i]);
-
+      
       this.tasks[i].forEach((item) => {
+
         new Card(parent, item).addTask();
 
         if (i === 0) {
@@ -143,6 +145,7 @@ export default class Board {
   }
 
   addNewTask(e) {
+    console.log('add');
     e.preventDefault();
     const closestColumn = e.target.closest('.column');
     const parent = closestColumn.querySelector('.tasks-list');
@@ -209,7 +212,7 @@ export default class Board {
     if (e.target.classList.contains('task')) {
       this.draggedEl = e.target;
       this.ghostEl = e.target.cloneNode(true);
-      this.ghostEl.removeChild(this.ghostEl.querySelector('.close'));
+      // this.ghostEl.removeChild(this.ghostEl.querySelector('.close'));
       this.ghostEl.classList.add('dragged');
       this.ghostEl.classList.add('ghost');
       this.ghostEl.style.width = `${this.draggedEl.offsetWidth}px`;
@@ -217,11 +220,12 @@ export default class Board {
       document.body.appendChild(this.ghostEl);
 
       const { top, left } = e.target.getBoundingClientRect();
+      
       this.top = e.pageY - top;
       this.left = e.pageX - left;
 
-      this.ghostEl.style.top = `${top - this.draggedEl.offsetHeight}px`;
-      this.ghostEl.style.left = `${left - this.board.offsetWidth}px`;
+      this.ghostEl.style.top = `${top }px`;
+      this.ghostEl.style.left = `${left}px`;
 
       this.ghostEl.style.width = `${this.draggedEl.offsetWidth}px`;
       this.ghostEl.style.height = `${this.draggedEl.offsetHeight}px`;
