@@ -219,17 +219,17 @@ export default class Board {
       this.ghostEl.style.height = `${this.draggedEl.offsetHeight}px`;
       document.body.appendChild(this.ghostEl);
 
-      const { top, left } = e.target.getBoundingClientRect();
+      // const { top, left } = e.target.getBoundingClientRect();
       
-      this.top = e.pageY - top;
-      this.left = e.pageX - left;
+      // this.top = e.pageY - top;
+      // this.left = e.pageX - left;
 
-      this.ghostEl.style.top = `${top }px`;
-      this.ghostEl.style.left = `${left}px`;
+      
 
-      this.ghostEl.style.width = `${this.draggedEl.offsetWidth}px`;
-      this.ghostEl.style.height = `${this.draggedEl.offsetHeight}px`;
+      this.ghostEl.style.top = `${e.pageY - this.ghostEl.offsetWidth / 4 }px`;
+      this.ghostEl.style.left = `${e.pageX - this.ghostEl.offsetHeight / 4}px`;
 
+      
       this.draggedEl.style.display = 'none';
       this.board.addEventListener('mousemove', this.dragMove);
       document.addEventListener('mousemove', this.showPossiblePlace);
@@ -243,8 +243,8 @@ export default class Board {
       return;
     }
 
-    this.ghostEl.style.top = `${e.pageY - this.top}px`;
-    this.ghostEl.style.left = `${e.pageX - this.left}px`;
+    this.ghostEl.style.top = `${e.pageY - this.ghostEl.offsetWidth / 4 }px`;
+    this.ghostEl.style.left = `${e.pageX - this.ghostEl.offsetHeight / 4}px`;
   }
 
   mouseUp() {
